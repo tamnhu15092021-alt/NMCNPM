@@ -1,2 +1,19 @@
-# NMCNPM
-Dự án này được phát triển trong môn Nhập môn Công nghệ Phần mềm. Mục tiêu là áp dụng quy trình phát triển phần mềm, từ phân tích yêu cầu, thiết kế, lập trình, kiểm thử và triển khai.  👥 Thành viên nhóm
+Hello, my name is Như.  
+I am currently a Software Engineering student at Học Viện Công Nghệ Bưu Chính Viễn Thông.  
+
+🔹 Interests:
+- Software requirements and system analysis  
+- Web and mobile application development  
+- Artificial Intelligence and Machine Learning  
+
+🔹 Skills:
+- Programming languages: Python, Java, JavaScript, SQL  
+- Tools: Git, Visual Studio Code, Jira, MySQL  
+- Development process: Agile - Scrum, Waterfall  
+
+🔹 Goals:
+- To become a professional software engineer  
+- To contribute to real-world software projects  
+- To keep learning about new technologies and trends in the IT industry  
+
+Thank you for reading my introduction.
