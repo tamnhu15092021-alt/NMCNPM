@@ -1,5 +1,5 @@
 Hello, my name is Như.  
-I am currently a Software Engineering student at Học Viện Công Nghệ Bưu Chính Viễn Thông.  
+I am currently a Software Engineering student at Posts and Telecommunications Institute of Technology.  
 
 🔹 Interests:
 - Software requirements and system analysis  
