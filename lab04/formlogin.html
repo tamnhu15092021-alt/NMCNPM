@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Login Form - Demo</title>
+
+  <style>
+    :root{
+      --bg:#f4f7fb;
+      --card:#ffffff;
+      --accent:#2b6cb0;
+      --danger:#e53e3e;
+      --muted:#6b7280;
+      --radius:12px;
+      font-family: Inter, Roboto, "Segoe UI", Arial, sans-serif;
+    }
+    html,body{
+      height:100%;
+      margin:0;
+      background:linear-gradient(180deg, #eef2ff 0%, var(--bg) 100%);
+      color:#111827;
+    }
+
+    .wrap{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+    }
+
+    .card{
+      width:100%;
+      max-width:420px;
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow: 0 10px 30px rgba(15,23,42,0.08);
+      padding:28px;
+      box-sizing:border-box;
+    }
+
+    h1{
+      margin:0 0 6px 0;
+      font-size:20px;
+    }
+    p.lead{ margin:0 0 18px 0; color:var(--muted); font-size:14px; }
+
+    .form-row{ margin-bottom:14px; }
+    label{ display:block; font-size:13px; margin-bottom:6px; }
+    input[type="text"], input[type="password"]{
+      width:100%;
+      padding:10px 12px;
+      font-size:14px;
+      border-radius:8px;
+      border:1px solid #e6e9ef;
+      background:#fff;
+      box-sizing:border-box;
+      outline:none;
+      transition:box-shadow .12s, border-color .12s;
+    }
+    input:focus{ border-color: var(--accent); box-shadow: 0 0 0 4px rgba(43,108,176,0.08); }
+
+    .row{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .left {
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+
+    .actions{
+      margin-top:12px;
+      display:flex;
+      gap:10px;
+    }
+
+    button{
+      padding:10px 14px;
+      border-radius:8px;
+      border:0;
+      cursor:pointer;
+      font-weight:600;
+      font-size:14px;
+    }
+
+    .btn-primary{ background:var(--accent); color:#fff; flex:1; }
+    .btn-secondary{ background:#eef2f7; color:var(--accent); }
+    .error{ color:var(--danger); font-size:13px; margin-top:6px; }
+
+    .small{ font-size:13px; color:var(--muted); margin-top:10px; }
+
+    /* responsive */
+    @media (max-width:420px){
+      .card{ padding:18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" role="main" aria-labelledby="title">
+      <h1 id="title">Đăng nhập</h1>
+      <p class="lead">Vui lòng nhập Username và Password để đăng nhập.</p>
+
+      <form id="loginForm" novalidate>
+        <div class="form-row">
+          <label for="username">Username</label>
+          <input id="username" name="username" type="text" autocomplete="username" required aria-required="true" />
+          <div id="uerror" class="error" aria-live="polite"></div>
+        </div>
+
+        <div class="form-row">
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" autocomplete="current-password" required aria-required="true" />
+          <div id="perror" class="error" aria-live="polite"></div>
+        </div>
+
+        <div class="row">
+          <div class="left">
+            <input id="remember" type="checkbox" />
+            <label for="remember">Remember me</label>
+          </div>
+          <div>
+            <a href="#" id="forgot" class="small">Quên mật khẩu?</a>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button type="button" id="cancel" class="btn-secondary">Cancel</button>
+          <button type="submit" id="loginBtn" class="btn-primary">Login</button>
+        </div>
+
+        <div id="serverMsg" class="error" aria-live="polite" style="display:none"></div>
+
+        <p class="small">Lưu ý: Đây là demo frontend. Không lưu mật khẩu ở nơi công khai trong ứng dụng thật.</p>
+      </form>
+    </div>
+  </div>
+
+<script>
+  // Demo credentials (CHỈ DÙNG CHO BÀI TẬP, KHÔNG DÙNG TRONG THỰC TẾ)
+  const DEMO_USER = { username: "student", password: "123456" };
+
+  // Elements
+  const form = document.getElementById("loginForm");
+  const usernameEl = document.getElementById("username");
+  const passwordEl = document.getElementById("password");
+  const rememberEl = document.getElementById("remember");
+  const uerror = document.getElementById("uerror");
+  const perror = document.getElementById("perror");
+  const serverMsg = document.getElementById("serverMsg");
+  const cancelBtn = document.getElementById("cancel");
+
+  // Load saved username if Remember me used
+  window.addEventListener("DOMContentLoaded", () => {
+    const saved = localStorage.getItem("atm_demo_user");
+    if (saved) {
+      try {
+        const obj = JSON.parse(saved);
+        if (obj.username) {
+          usernameEl.value = obj.username;
+          rememberEl.checked = true;
+        }
+      } catch(e){}
+    }
+  });
+
+  // Basic validation function
+  function validate() {
+    let ok = true;
+    uerror.textContent = "";
+    perror.textContent = "";
+    serverMsg.style.display = "none";
+    serverMsg.textContent = "";
+
+    const u = usernameEl.value.trim();
+    const p = passwordEl.value;
+
+    if (u.length === 0) {
+      uerror.textContent = "Bạn chưa nhập username.";
+      ok = false;
+    } else if (u.length < 3) {
+      uerror.textContent = "Username phải có ít nhất 3 ký tự.";
+      ok = false;
+    }
+
+    if (p.length === 0) {
+      perror.textContent = "Bạn chưa nhập password.";
+      ok = false;
+    } else if (p.length < 4) {
+      perror.textContent = "Password phải có ít nhất 4 ký tự.";
+      ok = false;
+    }
+
+    return ok;
+  }
+
+  // Simulated "server" check (synchronous mock)
+  function mockAuthenticate(username, password) {
+    // In real app call API over HTTPS
+    return username === DEMO_USER.username && password === DEMO_USER.password;
+  }
+
+  // Submit handler
+  form.addEventListener("submit", function(ev){
+    ev.preventDefault();
+    if (!validate()) return;
+
+    const u = usernameEl.value.trim();
+    const p = passwordEl.value;
+
+    // Simulate server delay
+    document.getElementById("loginBtn").textContent = "Loading...";
+    document.getElementById("loginBtn").disabled = true;
+
+    setTimeout(() => {
+      const ok = mockAuthenticate(u,p);
+      document.getElementById("loginBtn").textContent = "Login";
+      document.getElementById("loginBtn").disabled = false;
+
+      if (!ok) {
+        serverMsg.style.display = "block";
+        serverMsg.textContent = "Username hoặc Password không đúng.";
+        return;
+      }
+
+      // Remember me -> store username only (NOT password)
+      if (rememberEl.checked) {
+        localStorage.setItem("atm_demo_user", JSON.stringify({ username: u }));
+      } else {
+        localStorage.removeItem("atm_demo_user");
+      }
+
+      // On success -> redirect or show success
+      alert("Đăng nhập thành công (demo). Bạn có thể redirect tới trang khác.");
+      // window.location.href = "/dashboard.html";  // ví dụ
+    }, 700);
+  });
+
+  // Cancel clears inputs
+  cancelBtn.addEventListener("click", () => {
+    usernameEl.value = "";
+    passwordEl.value = "";
+    rememberEl.checked = false;
+    uerror.textContent = "";
+    perror.textContent = "";
+    serverMsg.style.display = "none";
+  });
+
+  // allow Enter to submit on password
+  passwordEl.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      form.requestSubmit();
+    }
+  });
+</script>
+</body>
+</html>
