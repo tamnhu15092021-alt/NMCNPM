@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login Page</title>
+  <!-- Font Awesome để dùng icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* Nền gradient toàn trang */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #00c6ff, #bc00ff);
+    }
+
+    /* Khung login */
+    .login-box {
+      background: #fff;
+      border-radius: 12px;
+      padding: 40px 30px;
+      width: 360px;
+      box-shadow: 0px 6px 20px rgba(0,0,0,0.15);
+      text-align: center;
+    }
+
+    .login-box h2 {
+      margin-bottom: 25px;
+      font-size: 28px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    /* Input */
+    .textbox {
+      margin-bottom: 18px;
+      text-align: left;
+    }
+    .textbox label {
+      font-size: 14px;
+      color: #555;
+      display: block;
+      margin-bottom: 5px;
+    }
+    .textbox input {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-bottom: 2px solid #ccc;
+      outline: none;
+      font-size: 14px;
+    }
+    .textbox input:focus {
+      border-bottom: 2px solid #7d2ae8;
+    }
+
+    /* Link forgot password */
+    .forgot {
+      text-align: right;
+      margin-bottom: 20px;
+    }
+    .forgot a {
+      font-size: 12px;
+      color: #7d2ae8;
+      text-decoration: none;
+    }
+
+    /* Nút LOGIN */
+    .btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      color: #fff;
+      background: linear-gradient(to right, #00c6ff, #bc00ff);
+      margin-bottom: 20px;
+      transition: opacity 0.3s;
+    }
+    .btn:hover {
+      opacity: 0.9;
+    }
+
+    /* Social login */
+    .social {
+      margin: 15px 0;
+    }
+    .social p {
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: #666;
+    }
+    .social a {
+      display: inline-block;
+      margin: 0 10px;
+      width: 45px;
+      height: 45px;
+      line-height: 45px;
+      border-radius: 50%;
+      text-align: center;
+      color: #fff;
+      font-size: 20px;
+      transition: 0.3s;
+    }
+    .social a.facebook { background: #3b5998; }
+    .social a.twitter { background: #1da1f2; }
+    .social a.google  { background: #db4437; }
+    .social a:hover { opacity: 0.8; }
+
+    /* Sign Up link */
+    .signup {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #333;
+    }
+    .signup a {
+      text-decoration: none;
+      color: #7d2ae8;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-box">
+    <h2>Login</h2>
+
+    <div class="textbox">
+      <label>Username</label>
+      <input type="text" placeholder="Type your username">
+    </div>
+
+    <div class="textbox">
+      <label>Password</label>
+      <input type="password" placeholder="Type your password">
+    </div>
+
+    <div class="forgot">
+      <a href="#">Forgot password?</a>
+    </div>
+
+    <button class="btn">LOGIN</button>
+
+    <div class="social">
+      <p>Or Sign Up Using</p>
+      <a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" class="twitter"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="google"><i class="fab fa-google"></i></a>
+    </div>
+
+    <div class="signup">
+      Or Sign Up Using <br>
+      <a href="#">SIGN UP</a>
+    </div>
+  </div>
+</body>
+</html>
