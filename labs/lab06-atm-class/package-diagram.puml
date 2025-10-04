@@ -1,0 +1,23 @@
+@startuml
+package "ATM System" {
+    package "UI" {
+        class LoginScreen
+        class WithdrawScreen
+        class DepositScreen
+    }
+
+    package "Controller" {
+        class TransactionController
+        class UserController
+    }
+
+    package "Model" {
+        class Account
+        class Transaction
+        class ATM
+    }
+
+    UI --> Controller
+    Controller --> Model
+}
+@enduml
